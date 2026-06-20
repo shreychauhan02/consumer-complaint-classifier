@@ -1,4 +1,4 @@
-# 📋 CFPB Complaint Classifier
+# 📋 CFPB Complaint Classifier["https://consumer-complaint-classifier-juykdoh6dzcqgidnciuhd4.streamlit.app"]
 
 A production-ready machine learning and generative AI system that automatically classifies consumer complaints submitted to the **Consumer Financial Protection Bureau (CFPB)**. The project implements a traditional NLP pipeline (TF-IDF + Logistic Regression) alongside an LLM-based classifier (Google Gemini 2.5 Flash), offering a comparison of performance, latency, and explainability through a sleek, custom-designed dark-themed Streamlit web interface.
 
