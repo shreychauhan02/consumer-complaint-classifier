@@ -10,3 +10,4 @@ joblib
 jupyter
 nbconvert
 ipykernel
+google-genai
