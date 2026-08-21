@@ -9,9 +9,10 @@ seaborn
 joblib
 jupyter
 nbconvert
-ipykernel
 google-genai
 fastapi
 uvicorn
 pydantic
 requests
+xgboost>=2.0.0
+lightgbm>=4.0.0

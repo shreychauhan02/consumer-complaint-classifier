@@ -1,6 +1,6 @@
 # CFPB Complaint Classifier
 
-A production-ready machine learning and generative AI system that classifies consumer complaints submitted to the Consumer Financial Protection Bureau (CFPB). The project implements multiple traditional ML classifiers (Logistic Regression, Naive Bayes, Decision Tree, Random Forest) with cross-validation and hyperparameter tuning, alongside an LLM-based classifier (Google Gemini 2.5 Flash), exposed through a FastAPI REST API and a Streamlit web interface.
+A production-ready machine learning and generative AI system that classifies consumer complaints submitted to the Consumer Financial Protection Bureau (CFPB). The project implements multiple traditional ML classifiers (Logistic Regression, Naive Bayes, Decision Tree, Random Forest, XGBoost, LightGBM) with cross-validation and hyperparameter tuning, alongside an LLM-based classifier (Google Gemini 2.5 Flash), exposed through a FastAPI REST API and a Streamlit web interface.
 
 ---
 
@@ -11,7 +11,7 @@ The CFPB receives thousands of unstructured, free-text consumer complaints daily
 This project solves this bottleneck by:
 
 1. **Automated Classification**: Instantly categorizing incoming free-text narratives into Debt Collection or Credit Card categories.
-2. **Model Comparison**: Evaluating 4 different ML algorithms with cross-validation, hyperparameter tuning via GridSearchCV, and AUC-ROC analysis.
+2. **Model Comparison**: Evaluating 6 different ML algorithms with cross-validation, hyperparameter tuning via GridSearchCV, and AUC-ROC analysis.
 3. **Hybrid Intelligence**: Providing side-by-side predictions from classical ML models and a contextual LLM (Gemini).
 4. **REST API**: Exposing model predictions through a FastAPI backend with OpenAPI documentation.
 5. **Explainable AI**: Leveraging the LLM to output structured reasoning explaining why the complaint belongs to a category.
@@ -30,7 +30,7 @@ CFPB/
 │   ├── 01_eda.ipynb                # Exploratory Data Analysis
 │   ├── 02_preprocessing.ipynb      # Cleaning, deduplication, downsampling
 │   ├── 03_model_training.ipynb     # Logistic Regression + Gemini evaluation
-│   └── 04_model_comparison.ipynb   # 4 classifiers, CV, tuning, AUC-ROC
+│   └── 04_model_comparison.ipynb   # 6 classifiers, CV, tuning, AUC-ROC
 ├── backend/
 │   ├── main.py                     # FastAPI application
 │   └── models.py                   # Pydantic request/response models
@@ -41,6 +41,8 @@ CFPB/
 │   ├── naive_bayes_model.joblib
 │   ├── decision_tree_model.joblib
 │   ├── random_forest_model.joblib
+│   ├── xgboost_model.joblib
+│   ├── lightgbm_model.joblib
 │   ├── tfidf_vectorizer.joblib
 │   ├── metrics.json                # All model metrics
 │   ├── ml_predictions.csv          # Predictions on test set
@@ -51,8 +53,6 @@ CFPB/
 │   └── model_comparison.png        # Side-by-side model comparison
 ├── requirements.txt
 └── .env
-```
-
 ---
 
 ## Pipeline Breakdown
@@ -77,7 +77,7 @@ CFPB/
 
 ### 4. Model Comparison and Evaluation (04_model_comparison.ipynb)
 
-- Trained and evaluated 4 classifiers: Logistic Regression, Naive Bayes, Decision Tree, Random Forest
+- Trained and evaluated 6 classifiers: Logistic Regression, Naive Bayes, Decision Tree, Random Forest, XGBoost, LightGBM
 - 5-fold stratified cross-validation for robust performance estimates
 - GridSearchCV hyperparameter tuning for each model
 - AUC-ROC curves, confusion matrices, and feature importance analysis
@@ -106,6 +106,8 @@ CFPB/
 | Model                | Accuracy | Precision | Recall  | F1 Score | AUC    |
 |----------------------|----------|-----------|---------|----------|--------|
 | Logistic Regression  | 93.75%   | 93.75%    | 93.75%  | 93.75%   | 98.12% |
+| LightGBM             | 92.56%   | 92.56%    | 92.56%  | 92.56%   | 97.10% |
+| XGBoost              | 92.44%   | 92.44%    | 92.44%  | 92.44%   | 97.00% |
 | Random Forest        | 91.87%   | 91.15%    | 92.75%  | 91.95%   | 97.52% |
 | Naive Bayes          | 89.50%   | 89.80%    | 89.12%  | 89.46%   | 95.46% |
 | Decision Tree        | 88.06%   | 88.50%    | 87.50%  | 87.99%   | 88.06% |
@@ -119,7 +121,7 @@ CFPB/
 | Domain                | Technologies                                            |
 |-----------------------|---------------------------------------------------------|
 | Core Language         | Python 3.13+                                            |
-| Data Science and ML   | pandas, numpy, scikit-learn                             |
+| Data Science and ML   | pandas, numpy, scikit-learn, xgboost, lightgbm          |
 | Generative AI         | Google GenAI SDK (gemini-2.5-flash)                     |
 | Web Interface         | Streamlit with custom dark mode CSS                     |
 | REST API              | FastAPI, Uvicorn, Pydantic                              |
